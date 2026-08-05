@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
 @PreviewScreenSizes
 @Composable
 fun SmartLogisticsApp() {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.TEMPERATURA) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.REGISTRAR) }
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
@@ -66,7 +66,7 @@ fun SmartLogisticsApp() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
             when (currentDestination) {
-                AppDestinations.TEMPERATURA -> TemperaturaScreen(modifier)
+                AppDestinations.REGISTRAR -> RegistrarScreen(modifier)
                 AppDestinations.HISTORIAL -> HistorialScreen(modifier)
             }
         }
@@ -74,7 +74,7 @@ fun SmartLogisticsApp() {
 }
 
 @Composable
-fun TemperaturaScreen(modifier: Modifier = Modifier) {
+fun RegistrarScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -106,15 +106,15 @@ enum class AppDestinations(
     val label: String,
     val icon: Int,
 ) {
-    TEMPERATURA("Temperatura", R.drawable.ic_home),
-    HISTORIAL("Historial", R.drawable.ic_favorite),
+    REGISTRAR("Registrar", R.drawable.ic_registrar),
+    HISTORIAL("Historial", R.drawable.ic_historial),
 }
 
 @Preview(showBackground = true)
 @Composable
-fun TemperaturaScreenPreview() {
+fun RegistrarScreenPreview() {
     SmartLogisticsTheme {
-        TemperaturaScreen()
+        RegistrarScreen()
     }
 }
 
