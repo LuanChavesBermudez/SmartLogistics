@@ -3,3 +3,10 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.compose) apply false
 }
+
+val localBuildRoot =
+    file(System.getenv("LOCALAPPDATA")).resolve("SmartLogistics/build-normal")
+
+subprojects {
+    layout.buildDirectory.set(localBuildRoot.resolve(name))
+}
