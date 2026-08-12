@@ -1,4 +1,4 @@
-package com.example.smartlogistics.room
+package com.example.smartlogistics.model
 
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey

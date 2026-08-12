@@ -1,4 +1,4 @@
-package com.example.smartlogistics.ui.history
+package com.example.smartlogistics.view.history
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

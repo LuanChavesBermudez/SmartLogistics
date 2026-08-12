@@ -1,4 +1,4 @@
-package com.example.smartlogistics.ui.temperature
+package com.example.smartlogistics.view.temperature
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,16 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun RegistrarScreen(
     modifier: Modifier = Modifier,
-    temperatureViewModel: TemperatureViewModel = viewModel(),
 ) {
-    temperatureViewModel.uiState.collectAsStateWithLifecycle()
-
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,

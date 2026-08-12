@@ -17,27 +17,31 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
-import com.example.smartlogistics.navigation.AppDestinations
-import com.example.smartlogistics.ui.history.HistorialScreen
-import com.example.smartlogistics.ui.temperature.RegistrarScreen
-import com.example.smartlogistics.ui.theme.SmartLogisticsTheme
+import com.example.smartlogistics.view.navigation.AppDestinations
+import com.example.smartlogistics.view.history.HistorialScreen
+import com.example.smartlogistics.view.temperature.RegistrarScreen
+import com.example.smartlogistics.view.theme.SmartLogisticsTheme
+import com.example.smartlogistics.viewmodel.LecturaViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val app = application as DatabaseInstance
+        val dao = app.db.lecturaDao()
+        val viewmodel = LecturaViewModel(dao)
+
         enableEdgeToEdge()
         setContent {
             SmartLogisticsTheme {
-                SmartLogisticsApp()
+                SmartLogisticsApp(viewmodel)
             }
         }
     }
 }
 
-@PreviewScreenSizes
 @Composable
-fun SmartLogisticsApp() {
+fun SmartLogisticsApp(viewmodel: LecturaViewModel) {
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.REGISTRAR) }
 
     NavigationSuiteScaffold(

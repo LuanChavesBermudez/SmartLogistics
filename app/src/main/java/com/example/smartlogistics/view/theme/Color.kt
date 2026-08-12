@@ -1,4 +1,4 @@
-package com.example.smartlogistics.ui.theme
+package com.example.smartlogistics.view.theme
 
 import androidx.compose.ui.graphics.Color
 

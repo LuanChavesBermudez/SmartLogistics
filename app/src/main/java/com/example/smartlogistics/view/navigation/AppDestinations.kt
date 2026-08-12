@@ -1,4 +1,4 @@
-package com.example.smartlogistics.navigation
+package com.example.smartlogistics.view.navigation
 
 import com.example.smartlogistics.R
 
