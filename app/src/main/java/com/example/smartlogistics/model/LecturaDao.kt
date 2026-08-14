@@ -14,6 +14,9 @@ interface LecturaDao {
     @Insert
     suspend fun insert(lectura: LecturaEntity)
 
+    @Query("SELECT * FROM lecturas_temperatura WHERE id = :id LIMIT 1")
+    fun getById(id: Long): Flow<LecturaEntity?>
+
     @Delete
     suspend fun delete(lectura: LecturaEntity)
 }
