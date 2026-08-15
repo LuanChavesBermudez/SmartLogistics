@@ -41,6 +41,13 @@ class LecturaViewModel(
         _registroUiState.value = RegistroUiState(temperatura = valor)
     }
 
+    fun alternarSignoTemperatura() {
+        val temperatura = _registroUiState.value.temperatura
+        actualizarTemperatura(
+            if (temperatura.startsWith("-")) temperatura.drop(1) else "-$temperatura"
+        )
+    }
+
     fun validarTemperatura(): Double? {
         val texto = _registroUiState.value.temperatura.trim()
         val temperatura = texto.replace(',', '.').toDoubleOrNull()

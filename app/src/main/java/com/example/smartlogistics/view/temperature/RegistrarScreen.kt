@@ -26,6 +26,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -39,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
@@ -59,6 +61,7 @@ fun RegistrarScreen(
     val uiState by viewmodel.registroUiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+    val alternarSignoDescription = stringResource(R.string.alternar_signo)
     val activity = context.findActivity()
     val permissionPreferences = context.getSharedPreferences(
         "location_permission_preferences",
@@ -148,6 +151,20 @@ fun RegistrarScreen(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(stringResource(R.string.temperatura_etiqueta)) },
             suffix = { Text(stringResource(R.string.grados_celsius)) },
+            trailingIcon = {
+                IconButton(
+                    onClick = viewmodel::alternarSignoTemperatura,
+                    enabled = !uiState.obteniendoUbicacion,
+                ) {
+                    Text(
+                        text = "±",
+                        modifier = Modifier.semantics {
+                            contentDescription = alternarSignoDescription
+                        },
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
+            },
             singleLine = true,
             isError = uiState.temperaturaError != null,
             supportingText = uiState.temperaturaError?.let { error ->

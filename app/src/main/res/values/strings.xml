@@ -4,6 +4,7 @@
     <string name="registrar_instruccion">Ingrese la temperatura actual del contenedor.</string>
     <string name="temperatura_etiqueta">Temperatura</string>
     <string name="grados_celsius">°C</string>
+    <string name="alternar_signo">Cambiar entre temperatura positiva y negativa</string>
     <string name="registrar_lectura">Registrar lectura</string>
     <string name="obteniendo_ubicacion">Obteniendo ubicación…</string>
     <string name="coordenadas_obtenidas">Ubicación obtenida\nLatitud: %1$.6f\nLongitud: %2$.6f</string>
