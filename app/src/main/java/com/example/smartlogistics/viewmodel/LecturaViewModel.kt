@@ -24,6 +24,8 @@ data class RegistroUiState(
     val puedeSolicitarPermiso: Boolean = false,
     val mostrarAjustesAplicacion: Boolean = false,
     val mostrarAjustesUbicacion: Boolean = false,
+    val registroMensaje: String? = null,
+    val registroExitoso: Boolean = false,
 )
 
 class LecturaViewModel(
@@ -57,6 +59,7 @@ class LecturaViewModel(
 
     fun obtenerUbicacion() {
         if (_registroUiState.value.obteniendoUbicacion) return
+        val temperatura = validarTemperatura() ?: return
 
         _registroUiState.value = _registroUiState.value.copy(
             obteniendoUbicacion = true,
@@ -67,30 +70,42 @@ class LecturaViewModel(
             mostrarAjustesUbicacion = false,
         )
         viewModelScope.launch {
-            runCatching { locationProvider.obtenerUbicacionActual() }
-                .onSuccess { coordenadas ->
+            try {
+                val coordenadas = locationProvider.obtenerUbicacionActual()
+                if (coordenadas == null) {
                     _registroUiState.value = _registroUiState.value.copy(
                         obteniendoUbicacion = false,
-                        coordenadas = coordenadas,
-                        ubicacionError = if (coordenadas == null) {
-                            "No se pudo obtener la ubicación actual. Verifique que la ubicación esté activada."
-                        } else {
-                            null
-                        },
-                        mostrarAjustesUbicacion = coordenadas == null,
+                        ubicacionError = "No se pudo obtener la ubicación actual. Verifique que la ubicación esté activada.",
+                        mostrarAjustesUbicacion = true,
                     )
+                    return@launch
                 }
-                .onFailure { error ->
-                    _registroUiState.value = _registroUiState.value.copy(
-                        obteniendoUbicacion = false,
-                        ubicacionError = if (error is LocationDisabledException) {
-                            "La ubicación del dispositivo está desactivada."
-                        } else {
-                            "Ocurrió un error al obtener la ubicación."
-                        },
-                        mostrarAjustesUbicacion = error is LocationDisabledException,
+
+                dao.insert(
+                    LecturaEntity(
+                        temperatura = temperatura,
+                        latitud = coordenadas.latitud,
+                        longitud = coordenadas.longitud,
                     )
-                }
+                )
+                _registroUiState.value = RegistroUiState(
+                    coordenadas = coordenadas,
+                    registroMensaje = "Lectura registrada correctamente.",
+                    registroExitoso = true,
+                )
+            } catch (error: LocationDisabledException) {
+                _registroUiState.value = _registroUiState.value.copy(
+                    obteniendoUbicacion = false,
+                    ubicacionError = "La ubicación del dispositivo está desactivada.",
+                    mostrarAjustesUbicacion = true,
+                )
+            } catch (_: Exception) {
+                _registroUiState.value = _registroUiState.value.copy(
+                    obteniendoUbicacion = false,
+                    registroMensaje = "No se pudo registrar la lectura. Inténtelo nuevamente.",
+                    registroExitoso = false,
+                )
+            }
         }
     }
 
@@ -103,22 +118,6 @@ class LecturaViewModel(
             mostrarAjustesAplicacion = !puedeSolicitarDeNuevo,
             mostrarAjustesUbicacion = false,
         )
-    }
-
-    fun insertarLectura(lectura: LecturaEntity) {
-        viewModelScope.launch {
-            dao.insert(lectura)
-        }
-    }
-
-    fun buscarLectura(id: Long): Flow<LecturaEntity?> {
-        return dao.getById(id)
-    }
-
-    fun borrarLectura(lectura: LecturaEntity) {
-        viewModelScope.launch {
-            dao.delete(lectura)
-        }
     }
 
     class Factory(

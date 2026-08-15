@@ -10,4 +10,9 @@
     <string name="conceder_permiso">Conceder permiso</string>
     <string name="abrir_ajustes_aplicacion">Abrir ajustes</string>
     <string name="activar_ubicacion">Activar ubicación</string>
+    <string name="historial_titulo">Historial de lecturas</string>
+    <string name="historial_vacio">Todavía no hay lecturas registradas.</string>
+    <string name="temperatura_historial">Temperatura: %1$.2f °C</string>
+    <string name="latitud_historial">Latitud: %1$.6f</string>
+    <string name="longitud_historial">Longitud: %1$.6f</string>
 </resources>

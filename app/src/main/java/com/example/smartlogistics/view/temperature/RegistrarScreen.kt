@@ -136,6 +136,7 @@ fun RegistrarScreen(
             supportingText = uiState.temperaturaError?.let { error ->
                 { Text(error) }
             },
+            enabled = !uiState.obteniendoUbicacion,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -206,6 +207,18 @@ fun RegistrarScreen(
                     Text(stringResource(R.string.activar_ubicacion))
                 }
             }
+        }
+        uiState.registroMensaje?.let { mensaje ->
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = mensaje,
+                color = if (uiState.registroExitoso) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.error
+                },
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
         uiState.coordenadas?.let { coordenadas ->
             Spacer(modifier = Modifier.height(12.dp))
