@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.smartlogistics.R
@@ -33,16 +34,26 @@ fun HistorialScreen(
     val lecturas by viewmodel.historial.collectAsStateWithLifecycle(initialValue = emptyList())
 
     if (lecturas.isEmpty()) {
-        Box(
+        Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(24.dp),
-            contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = stringResource(R.string.historial_vacio),
-                style = MaterialTheme.typography.bodyLarge,
+                text = stringResource(R.string.historial_titulo),
+                style = MaterialTheme.typography.headlineSmall,
             )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = stringResource(R.string.historial_vacio),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
         }
     } else {
         LazyColumn(
@@ -66,7 +77,11 @@ fun HistorialScreen(
 
 @Composable
 private fun LecturaCard(lectura: LecturaEntity) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true) {},
+    ) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
@@ -78,10 +93,13 @@ private fun LecturaCard(lectura: LecturaEntity) {
             Text(stringResource(R.string.latitud_historial, lectura.latitud))
             Text(stringResource(R.string.longitud_historial, lectura.longitud))
             Text(
-                text = DateFormat.getDateTimeInstance(
-                    DateFormat.SHORT,
-                    DateFormat.MEDIUM,
-                ).format(Date(lectura.fechaHora)),
+                text = stringResource(
+                    R.string.fecha_hora_historial,
+                    DateFormat.getDateTimeInstance(
+                        DateFormat.SHORT,
+                        DateFormat.MEDIUM,
+                    ).format(Date(lectura.fechaHora)),
+                ),
                 style = MaterialTheme.typography.bodySmall,
             )
         }

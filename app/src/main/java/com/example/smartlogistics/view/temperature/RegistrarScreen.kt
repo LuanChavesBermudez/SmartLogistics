@@ -16,9 +16,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -26,12 +30,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,6 +58,7 @@ fun RegistrarScreen(
 ) {
     val uiState by viewmodel.registroUiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     val activity = context.findActivity()
     val permissionPreferences = context.getSharedPreferences(
         "location_permission_preferences",
@@ -72,6 +83,10 @@ fun RegistrarScreen(
             )
             viewmodel.informarPermisoUbicacionDenegado(puedeSolicitarDeNuevo)
         }
+    }
+
+    LaunchedEffect(uiState.registroExitoso) {
+        if (uiState.registroExitoso) focusManager.clearFocus()
     }
 
     fun solicitarUbicacion() {
@@ -110,6 +125,8 @@ fun RegistrarScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .imePadding()
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -137,7 +154,13 @@ fun RegistrarScreen(
                 { Text(error) }
             },
             enabled = !uiState.obteniendoUbicacion,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal,
+                imeAction = ImeAction.Done,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { focusManager.clearFocus() },
+            ),
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
@@ -212,6 +235,9 @@ fun RegistrarScreen(
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = mensaje,
+                modifier = Modifier.semantics {
+                    liveRegion = LiveRegionMode.Polite
+                },
                 color = if (uiState.registroExitoso) {
                     MaterialTheme.colorScheme.primary
                 } else {

@@ -15,4 +15,5 @@
     <string name="temperatura_historial">Temperatura: %1$.2f °C</string>
     <string name="latitud_historial">Latitud: %1$.6f</string>
     <string name="longitud_historial">Longitud: %1$.6f</string>
+    <string name="fecha_hora_historial">Fecha y hora: %1$s</string>
 </resources>
