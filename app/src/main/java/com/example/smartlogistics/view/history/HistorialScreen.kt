@@ -7,9 +7,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.smartlogistics.viewmodel.LecturaViewModel
 
 @Composable
-fun HistorialScreen(modifier: Modifier = Modifier) {
+fun HistorialScreen(
+    _viewmodel: LecturaViewModel,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,

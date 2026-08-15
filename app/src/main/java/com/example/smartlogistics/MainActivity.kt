@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -24,12 +25,14 @@ import com.example.smartlogistics.view.theme.SmartLogisticsTheme
 import com.example.smartlogistics.viewmodel.LecturaViewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewmodel: LecturaViewModel by viewModels {
+        LecturaViewModel.Factory(
+            (application as DatabaseInstance).db.lecturaDao()
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val app = application as DatabaseInstance
-        val dao = app.db.lecturaDao()
-        val viewmodel = LecturaViewModel(dao)
 
         enableEdgeToEdge()
         setContent {
@@ -64,8 +67,8 @@ fun SmartLogisticsApp(viewmodel: LecturaViewModel) {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
             when (currentDestination) {
-                AppDestinations.REGISTRAR -> RegistrarScreen(modifier)
-                AppDestinations.HISTORIAL -> HistorialScreen(modifier)
+                AppDestinations.REGISTRAR -> RegistrarScreen(viewmodel, modifier)
+                AppDestinations.HISTORIAL -> HistorialScreen(viewmodel, modifier)
             }
         }
     }

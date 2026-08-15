@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SmartLogistics</string>
+    <string name="registrar_titulo">Registrar temperatura</string>
+    <string name="registrar_instruccion">Ingrese la temperatura actual del contenedor.</string>
+    <string name="temperatura_etiqueta">Temperatura</string>
+    <string name="grados_celsius">°C</string>
+    <string name="registrar_lectura">Registrar lectura</string>
+    <string name="temperatura_valida">Temperatura válida. Ya se puede capturar la ubicación.</string>
 </resources>
