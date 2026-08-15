@@ -22,12 +22,14 @@ import com.example.smartlogistics.view.navigation.AppDestinations
 import com.example.smartlogistics.view.history.HistorialScreen
 import com.example.smartlogistics.view.temperature.RegistrarScreen
 import com.example.smartlogistics.view.theme.SmartLogisticsTheme
+import com.example.smartlogistics.location.FusedLocationProvider
 import com.example.smartlogistics.viewmodel.LecturaViewModel
 
 class MainActivity : ComponentActivity() {
     private val viewmodel: LecturaViewModel by viewModels {
         LecturaViewModel.Factory(
-            (application as DatabaseInstance).db.lecturaDao()
+            dao = (application as DatabaseInstance).db.lecturaDao(),
+            locationProvider = FusedLocationProvider(applicationContext),
         )
     }
 
