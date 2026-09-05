@@ -19,12 +19,12 @@
     <string name="fecha_hora_historial">Fecha y hora: %1$s</string>
     <string name="abrir_menu">Abrir menú de navegación</string>
     <string name="menu_inicio">Inicio</string>
-    <string name="menu_registro">Registro e historial</string>
+    <sString name="menu_registro">Registro e historial</sString>
     <string name="menu_registrar_lectura">Registrar</string>
     <string name="menu_historial">Historial</string>
     <string name="menu_mapa">Google Maps</string>
     <string name="menu_spotify">Spotify</string>
-    <string name="bienvenida_titulo">Control de cadena de frío</string>
+    <string name="bienvenida_titulo">Control de cadena de frío y más</string>
     <string name="bienvenida_descripcion">Abra el menú para registrar temperaturas, consultar el mapa o reproducir una lista de Spotify.</string>
     <string name="descripcion_caja_producto">Caja de producto con termómetro</string>
     <string name="mapa_pendiente">La ubicación en Google Maps se integrará en el próximo avance.</string>
