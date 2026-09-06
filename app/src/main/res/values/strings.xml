@@ -29,4 +29,5 @@
     <string name="descripcion_caja_producto">Caja de producto con termómetro</string>
     <string name="mapa_pendiente">La ubicación en Google Maps se integrará en el próximo avance.</string>
     <string name="spotify_pendiente">La reproducción de Spotify se integrará en un avance posterior.</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
