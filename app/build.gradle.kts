@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.google.play.services.location)
     implementation(libs.play.services.maps)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.maps.compose)
 
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)

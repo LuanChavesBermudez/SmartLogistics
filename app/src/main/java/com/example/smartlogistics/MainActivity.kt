@@ -53,6 +53,7 @@ import com.example.smartlogistics.view.theme.SmartLogisticsTheme
 import com.example.smartlogistics.location.FusedLocationProvider
 import com.example.smartlogistics.viewmodel.LecturaViewModel
 import kotlinx.coroutines.launch
+import com.example.smartlogistics.view.maps.MapaScreen
 
 class MainActivity : ComponentActivity() {
     private val viewmodel: LecturaViewModel by viewModels {
@@ -139,10 +140,7 @@ fun SmartLogisticsApp(viewmodel: LecturaViewModel) {
                     viewmodel = viewmodel,
                     modifier = Modifier.padding(innerPadding),
                 )
-                MainDestination.MAPA -> PendingFeatureScreen(
-                    title = stringResource(R.string.menu_mapa),
-                    message = stringResource(R.string.mapa_pendiente),
-                    icon = R.drawable.ic_map,
+                MainDestination.MAPA -> MapaScreen(
                     modifier = Modifier.padding(innerPadding),
                 )
                 MainDestination.SPOTIFY -> PendingFeatureScreen(
